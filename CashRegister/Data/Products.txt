@@ -1,0 +1,7 @@
+11 Nutella 28,90 Styckpris
+12 Gurka 16,50 Styckpris
+22 Hushållsost 100 Styckpris
+33 Citron 4,90 Styckpris
+44 Bananer 9,90 Kilopris
+66 Choklad 9,90 Styckpris
+77 Apelsiner 29,90 Kilopris
