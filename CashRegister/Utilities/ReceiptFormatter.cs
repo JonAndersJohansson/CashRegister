@@ -68,6 +68,7 @@ namespace CashRegister.Utilities
             receipt.AppendLine("");
             receipt.AppendLine("~~~~~~~~~~~~~~~~~RIV~AV~HÄR~~~~~~~~~~~~~~~~~");
 
+            cart.Clear();
             return receipt.ToString();
         }
     }

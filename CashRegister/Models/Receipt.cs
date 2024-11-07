@@ -4,6 +4,9 @@ using CashRegister.Utilities;
 
 namespace CashRegister.Models
 {
+    /// <summary>
+    /// Representerar ett kvitto som hanterar formatering, lagring och visning av kvittoinformation.
+    /// </summary>
     public class Receipt
     {
         private ReceiptFileHandler _receiptFileHandler = new ReceiptFileHandler();
@@ -15,17 +18,25 @@ namespace CashRegister.Models
         {
             _receiptFilePath = receiptFilePath;
         }
+
+        /// <summary>
+        /// Genererar och sparar kvittot för de köpta varorna och det totala beloppet till en textfil.
+        /// </summary>
+        /// <param name="cart">En lista över kundens köpta artiklar.</param>
+        /// <param name="total">Det totala beloppet för köpet.</param>
         public void SaveReceipt(List<CustomerItems> cart, decimal total)
         {
             string dateString = DateTime.Now.ToString("yyyyMMdd");
-            _receiptFilePath = _receiptFileHandler.CreateReceiptFilePath(_receiptFilePath, dateString);
-            int receiptNumber = _receiptFileHandler.GetNextReceiptNumber(_receiptFilePath);
+            string fullFilePath = _receiptFileHandler.CreateReceiptFilePath(_receiptFilePath, dateString);
+            int receiptNumber = _receiptFileHandler.GetNextReceiptNumber(fullFilePath);
 
             _receiptContent = _receiptFormatter.FormatReceipt(cart, total, receiptNumber);
-
-            _receiptFileHandler.SaveReceiptToFile(_receiptFilePath, _receiptContent);
+            _receiptFileHandler.SaveReceiptToFile(fullFilePath, _receiptContent);
         }
 
+        /// <summary>
+        /// Visar kvittot på skärmen med en formaterad layout och grafik.
+        /// </summary>
         public void DisplayReceipt()
         {
             string[] receiptLines = _receiptContent.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
