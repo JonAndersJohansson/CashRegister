@@ -4,7 +4,7 @@ using CashRegister.UI;
 namespace CashRegister.Handlers
 {
     /// <summary>
-    /// Hanterar rabatter genom att lägga till, ta bort och spara dem.
+    /// Hanterar Discounts genom att lägga till, ta bort eller spara dem.
     /// </summary>
     public class DiscountHandler
     {
@@ -22,6 +22,7 @@ namespace CashRegister.Handlers
             _productHandler = productHandler;
             listOfDiscounts = fileHandler.LoadFromFile(ParseDiscount);
         }
+
         /// <summary>
         /// Tar en sträng från rabattfilen och delar upp den i komponenter för 
         /// att skapa ett Discount-objekt med dess specifika egenskaper. Denna 
@@ -193,6 +194,7 @@ namespace CashRegister.Handlers
             Console.ReadKey();
             _returnToMainMenu.Invoke();
         }
+
         /// <summary>
         /// Registrerar en metod för att återgå till huvudmenyn.
         /// </summary>

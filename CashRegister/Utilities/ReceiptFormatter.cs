@@ -18,12 +18,12 @@ namespace CashRegister.Utilities
             decimal roundedOfAmount = totalRounded - total;
 
             receipt.AppendLine("");
-            receipt.AppendLine("██╗  ██╗  ██████╗  ██████╗  ██████╗ ");
-            receipt.AppendLine("██║ ██╔╝██╔═══██╗██╔═══██╗██╔══██╗");
-            receipt.AppendLine("█████╔╝ ██║    ██║██║    ██║██████╔╝");
-            receipt.AppendLine("██╔═██╗ ██║    ██║██║    ██║██╔═══╝ ");
-            receipt.AppendLine("██║  ██╗╚██████╔╝╚██████╔╝██║     ");
-            receipt.AppendLine("╚═╝  ╚═╝ ╚═════╝  ╚═════╝  ╚═╝  ®  ");
+            receipt.AppendLine("     ██╗  ██╗ ██████╗  ██████╗ ██████╗ ");
+            receipt.AppendLine("     ██║ ██╔╝██╔═══██╗██╔═══██╗██╔══██╗");
+            receipt.AppendLine("     █████╔╝ ██║   ██║██║   ██║██████╔╝");
+            receipt.AppendLine("     ██╔═██╗ ██║   ██║██║   ██║██╔═══╝ ");
+            receipt.AppendLine("     ██║  ██╗╚██████╔╝╚██████╔╝██║     ");
+            receipt.AppendLine("     ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ®  ");
             receipt.AppendLine("                Lillgatan 7");
             receipt.AppendLine("            89242 Örnsköldsvik");
             receipt.AppendLine("             Tel: 0660-63729");

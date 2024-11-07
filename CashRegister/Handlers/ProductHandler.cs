@@ -4,6 +4,9 @@ using CashRegister.UI;
 
 namespace CashRegister.Handlers
 {
+    /// <summary>
+    /// Hanterar Products genom att lägga till, ändra, ta bort eller spara dem.
+    /// </summary>
     public class ProductHandler
     {
         public List<Product> listOfProducts;
@@ -11,7 +14,8 @@ namespace CashRegister.Handlers
         private DisplayList _displayList;
         private Action _returnToMainMenu;
 
-        public ProductHandler(FileHandler<Product> fileHandler, DisplayList displayList)
+        public ProductHandler(FileHandler<Product> fileHandler, 
+            DisplayList displayList)
         {
             _productFileHandler = fileHandler;
             _displayList = displayList;
@@ -19,10 +23,13 @@ namespace CashRegister.Handlers
         }
 
         /// <summary>
-        /// Tar en sträng från produktfilen och delar upp den i komponenter för att skapa ett 
-        /// Product-objekt med dess specifika egenskaper. Returnerar ett nytt Product-objekt med värden som är extraherade från strängen
+        /// Tar en sträng från produktfilen och delar upp den i komponenter 
+        /// för att skapa ett Product-objekt med dess specifika egenskaper. 
+        /// Returnerar ett nytt Product-objekt med värden som är extraherade 
+        /// från strängen
         /// </summary>
-        /// <param name="line">En sträng från filen som innehåller egenskaper för ett Product-objekt.</param>
+        /// <param name="line">En sträng från filen som innehåller egenskaper 
+        /// för ett Product-objekt.</param>
         private Product ParseProduct(string line)
         {
             string[] parts = line.Split(' ');
@@ -61,7 +68,12 @@ namespace CashRegister.Handlers
         public void ChangeProduct()
         {
             int index = _displayList.BrowseAList(listOfProducts, false);
-            Product selectedProduct = listOfProducts[index]; 
+            Product selectedProduct = listOfProducts[index];
+
+            int newPlu = selectedProduct.PLU;
+            string newName = selectedProduct.Name;
+            decimal newPrice = selectedProduct.Price;
+            PriceType newPriceType = selectedProduct.PriceType;
 
             while (true)
             {
@@ -75,56 +87,53 @@ namespace CashRegister.Handlers
                 Console.Write("Ange nytt PLU eller tryck Enter för att behålla " +
                     "nuvarande:\n");
                 string newPluInput = Console.ReadLine();
-                if (!string.IsNullOrEmpty(newPluInput) && int.TryParse(newPluInput,
-                    out int newPlu))
+                if (!string.IsNullOrEmpty(newPluInput) &&
+                    int.TryParse(newPluInput, out int tempPlu) && tempPlu > 0)
                 {
-                    if (listOfProducts.Any(p => p.PLU == newPlu))
+                    if (listOfProducts.Any(p => p.PLU == tempPlu))
                     {
                         Console.WriteLine("Det angivna PLU-numret är redan " +
                             "upptaget. Försök igen.");
                         Thread.Sleep(2000);
                         continue;
                     }
-                    selectedProduct.PLU = newPlu;
+                    newPlu = tempPlu;
                 }
                 else if (string.IsNullOrEmpty(newPluInput))
-                {
-                    newPlu = selectedProduct.PLU;
                     Console.WriteLine("Du behöll PLU-numret.");
-                }
                 else
                 {
-                    Console.WriteLine("Felaktigt värde av PLU, exempel: 125. Försök igen");
+                    Console.WriteLine("Felaktigt värde av PLU, exempel: 125. " +
+                        "Försök igen");
                     Thread.Sleep(2000);
                     continue;
                 }
 
                 // Name Input
-                Console.Write("Ange nytt namn eller tryck Enter för att behålla " +
-                    "nuvarande:\n");
-                string newName = Console.ReadLine();
-                if (!string.IsNullOrEmpty(newName))
-                    selectedProduct.Name = newName;
+                Console.Write("Ange nytt namn eller tryck Enter för att " +
+                    "behålla nuvarande:\n");
+                string newNameInput = Console.ReadLine();
+                if (!string.IsNullOrEmpty(newNameInput))
+                    newName = newNameInput;
                 else
                     Console.WriteLine("Du behöll namnet.");
 
                 // Price Input
-                Console.Write("Ange nytt pris eller tryck Enter för att behålla " +
-                    "nuvarande:\nExempel: 29,90\n");
+                Console.Write("Ange nytt pris eller tryck Enter för att " +
+                    "behålla nuvarande:\nExempel: 29,90\n");
                 string newPriceInput = Console.ReadLine();
-                if (!string.IsNullOrEmpty(newPriceInput) && decimal.TryParse(
-                    newPriceInput, out decimal newPrice))
+                if (!string.IsNullOrEmpty(newPriceInput) &&
+                    decimal.TryParse(newPriceInput, out decimal tempPrice) &&
+                    tempPrice > 0)
                 {
-                    selectedProduct.Price = newPrice;
+                    newPrice = tempPrice;
                 }
                 else if (string.IsNullOrEmpty(newPriceInput))
-                {
-                    newPrice = selectedProduct.Price;
                     Console.WriteLine("Du behöll priset.");
-                }
                 else
                 {
-                    Console.WriteLine("Fel format på pris, Exempel: 29,90. Försök igen.");
+                    Console.WriteLine("Fel format på pris, Exempel: 29,90. " +
+                        "Försök igen.");
                     Thread.Sleep(2000);
                     continue;
                 }
@@ -134,18 +143,23 @@ namespace CashRegister.Handlers
                     "Enter\n1. Styckpris\n2. Kilopris");
                 string changePriceTypeInput = Console.ReadLine();
                 if (changePriceTypeInput == "1" || changePriceTypeInput == "2")
-                {
-                    selectedProduct.PriceType = changePriceTypeInput == "1" ?
+                    newPriceType = changePriceTypeInput == "1" ? 
                         PriceType.Styckpris : PriceType.Kilopris;
-                }
                 else
                 {
-                    Console.WriteLine("Fel värde, välj 1 eller 2. Försök igen.");
+                    Console.WriteLine("Fel värde, välj 1 eller 2. " +
+                        "Försök igen.");
                     Thread.Sleep(2000);
                     continue;
                 }
                 break;
             }
+
+            selectedProduct.PLU = newPlu;
+            selectedProduct.Name = newName;
+            selectedProduct.Price = newPrice;
+            selectedProduct.PriceType = newPriceType;
+
             Console.WriteLine($"Följande produkt har ändrats:\n" +
                 $"{selectedProduct}\n\nTryck valfri tangent för att återgå" +
                 $" till huvudmenyn.");
@@ -173,7 +187,7 @@ namespace CashRegister.Handlers
                     $"{lastPlu}\n\nAnge önskat PLU och tryck Enter:\n");
                 string newPluInput = Console.ReadLine();
                 if (!string.IsNullOrEmpty(newPluInput) && int.TryParse(
-                    newPluInput, out int newPlu))
+                    newPluInput, out int newPlu) && newPlu > 0)
                 {
                     if (listOfProducts.Any(p => p.PLU == newPlu))
                     {
@@ -209,8 +223,9 @@ namespace CashRegister.Handlers
                 // Price Input
                 Console.Write("Ange pris. Exempel: 29,90. Tryck därefter Enter:\n");
                 string newPriceInput = Console.ReadLine();
-                if (!string.IsNullOrEmpty(newPriceInput) && decimal.TryParse(
-                    newPriceInput, out decimal newPrice))
+                if (!string.IsNullOrEmpty(newPriceInput) &&
+                    decimal.TryParse(newPriceInput, out decimal newPrice) &&
+                    newPrice > 0)
                 {
                     newProduct.Price = newPrice;
                 }
@@ -253,7 +268,8 @@ namespace CashRegister.Handlers
         }
 
         /// <summary>
-        /// Ger användaren möjlighet att ta bort befintlig produkt från listOfProducts och Products.txt.
+        /// Ger användaren möjlighet att ta bort befintlig produkt från 
+        /// listOfProducts och Products.txt.
         /// </summary>
         public void RemoveProduct()
         {
