@@ -17,6 +17,7 @@ namespace CashRegister.Handlers
             _displayList = displayList;
             listOfProducts = fileHandler.LoadFromFile(ParseProduct);
         }
+
         /// <summary>
         /// Tar en sträng från produktfilen och delar upp den i komponenter för att skapa ett 
         /// Product-objekt med dess specifika egenskaper. Returnerar ett nytt Product-objekt med värden som är extraherade från strängen
@@ -153,6 +154,7 @@ namespace CashRegister.Handlers
             Console.ReadKey();
             _returnToMainMenu.Invoke();
         }
+
         /// <summary>
         /// Metod som ger användaren möjlighet att skapa en ny produkt.
         /// </summary>
@@ -249,6 +251,7 @@ namespace CashRegister.Handlers
             _returnToMainMenu.Invoke();
 
         }
+
         /// <summary>
         /// Ger användaren möjlighet att ta bort befintlig produkt från listOfProducts och Products.txt.
         /// </summary>
@@ -269,6 +272,7 @@ namespace CashRegister.Handlers
             Console.ReadKey();
             _returnToMainMenu.Invoke();
         }
+
         /// <summary>
         /// Registrerar en metod för att återgå till huvudmenyn.
         /// </summary>

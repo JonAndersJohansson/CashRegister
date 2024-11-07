@@ -92,10 +92,12 @@ namespace CashRegister.Handlers
                 Console.Clear();
                 MenuGraphics.ShowMenuGraphics();
 
+                // PLU Input
                 Console.WriteLine($"Du har valt: {selectedProduct}\n");
+
+                // DiscountType Input
                 Console.WriteLine("Ange önskad rabatttyp, 1 eller 2 och " +
                     "tryck Enter\n1. Procent\n2. Fast belopp");
-
                 string newDiscountTypeInput = Console.ReadLine();
                 if (newDiscountTypeInput == "1" || newDiscountTypeInput == "2")
                 {
@@ -112,6 +114,7 @@ namespace CashRegister.Handlers
                     continue;
                 }
 
+                // DiscountNumber Input
                 Console.WriteLine("Ange önskad rabatt. Exempel: 20");
                 if (!decimal.TryParse(Console.ReadLine(), out 
                     newDiscountAmountInput) || newDiscountAmountInput < 0)
@@ -122,6 +125,7 @@ namespace CashRegister.Handlers
                     continue;
                 }
 
+                // StartDate Input
                 Console.WriteLine("Ange startdatum (åååå-mm-dd):");
                 if (!DateTime.TryParse(Console.ReadLine(), out 
                     newStartDateInput))
@@ -132,6 +136,7 @@ namespace CashRegister.Handlers
                     continue;
                 }
 
+                // EndDate Input
                 Console.WriteLine("Ange slutdatum (åååå-mm-dd):");
                 if (!DateTime.TryParse(Console.ReadLine(), out 
                     newEndDateInput))

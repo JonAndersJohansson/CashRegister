@@ -1,4 +1,6 @@
-﻿namespace CashRegister.Handlers
+﻿using CashRegister.UI;
+
+namespace CashRegister.Handlers
 {
     /// <summary>
     /// En generisk klass för att hantera filinläsning och -skrivning av olika typer av objekt.
@@ -24,7 +26,17 @@
 
             if (!File.Exists(_filePath))
             {
-                Console.WriteLine("Filen saknas. Skapar fil.\nVänligen kontakta tekniker. Tryck Enter för att stänga programmet.");
+                MenuGraphics.ShowMenuGraphics();
+
+                Console.WriteLine($"ERROR: En viktig datafil saknas för att " +
+                    $"programmet skall\nkunna fungera. Vi ber om ursäkt för " +
+                    $"detta.\n\nProgrammet kommer att avslutas. När du " +
+                    $"startar programmet\nigen kommer en ny tom datafil att " +
+                    $"ha skapats på filväg:\n{_filePath}\nDetta möjliggör " +
+                    $"att programmet kan användas men viktig data kan " +
+                    $"fortfarande saknas. Om detta är ett problem, " +
+                    $"kontakta\ntekniker på telnr: 0703792074\n\nTryck " +
+                    $"valfri tangent för att avsluta programmet.");
                 File.Create(_filePath).Dispose(); 
                 Console.ReadKey();
                 Environment.Exit(0);
